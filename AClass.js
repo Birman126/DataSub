@@ -72,5 +72,5 @@ class Class2 extends AClass { // Сортировка массива вторы�
     };
 }
 
-console.log(new Class1(s).sort());
+
 

@@ -7,7 +7,7 @@
 
 SELECT
 Students.firstName, Students.lastName
-COUNT aacount
+COUNT (Student.StudentId) as aacount
 FROM
 Students INNER JOIN Exams
 ON 
@@ -16,12 +16,24 @@ WHERE
 Exams.Result<3
 GROUP BY Students.StudentId
 HAVING
-Exams.Result<3
+aacount >= 2
 
 SELECT
 student.Group
-COUNT (*) as amount
-FROM Students
-GROUP BY Group
-HAVING amount >10
+COUNT(*) as amount --подсчет строк по столбцу Groupe
+FROM
+(
+  SELECT
+  Student.FirstName, Student.LastName, Student.StudentId, COUNT(*) as amount1 
+  FROM
+  Student INNER JOIN Exams --объединение двух таблиц по столбцу StudentId
+  ON
+  Student.StudentId = Exams.StudentId
+  WHERE
+  Exams.Result < 3
+  GROUP BY 
+  Student.StudentId HAVING amount1 >= 2
+  )
+GROUP BY Group --группировка по Group
+HAVING  amount > 10;
 
